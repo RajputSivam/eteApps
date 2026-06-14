@@ -1,0 +1,73 @@
+class Solution {
+//brute force
+    public int coinChange(int[] coins, int amount)
+    {
+        int ans=help(coins.length-1,amount,coins );
+        return ans==(int)1e9?-1:ans;
+    }
+    public static int help(int idx,int amount,int[] coins )
+    {
+        if( idx==0 )
+        {
+            if( amount%coins[0]==0)
+            {
+                return amount/coins[0];
+            }
+            else
+            {
+                return (int)1e9;
+            }
+        }
+        int nt=help(idx-1,amount, coins );
+        int t=(int)1e9;
+        if( coins[idx]<=amount )
+        {
+            t=1+help(idx,amount-coins[idx],coins);
+        }
+        return Math.min(t,nt);
+    }
+
+}
+//Memosiation
+    public int coinChange(int[] coins, int amount)
+    {
+        int n=coins.length;
+        int[][] dp=new int[n][amount+1];
+        for( int [] ar:dp) Arrays.fill( ar,-1 );
+        int ans=help(n-1,amount, coins,dp );;
+        return ans>=(int)1e9?-1:ans;
+    }
+    public static int help(int idx,int amount,int[] coins,int[][] dp)
+    {
+        if( dp[idx][amount]!=-1)
+        {
+            return dp[idx][amount];
+        }
+        if( idx==0 )
+        {
+            if( amount%coins[0]==0)
+            {
+                return amount/coins[0];
+            }
+            else
+            {
+                return (int)1e9;
+            }
+        }
+        int nt=help(idx-1,amount, coins,dp );
+        int t=(int)1e9;
+        if( coins[idx]<=amount )
+        {
+            t=1+help(idx,amount-coins[idx],coins,dp);
+        }
+        return dp[idx][amount]=Math.min(t,nt);
+    }
+
+}
+
+
+| Approach                 | Time Complexity | Space Complexity |
+| ------------------------ | --------------- | ---------------- |
+| Brute Force Recursion    | O(2^(N+A))      | O(N+A)           |
+| Memoization              | O(N×A)          | O(N×A) + O(N+A)  |
+| Memoization (simplified) | O(N×A)          | O(N×A)           |
