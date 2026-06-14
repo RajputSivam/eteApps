@@ -1,0 +1,51 @@
+// //brute forces
+class Solution {
+    public int climbStairs(int n)
+    {
+        return help(n);
+    }
+    public static int help(int n)
+    {
+        if( n<0) 
+        {
+            return 0;
+        }
+        if( n==0)
+        {
+            return 1;
+        }
+        return help( n-1)+help(n-2);
+    }
+}
+//Memoisation 
+class Solution {
+    public int climbStairs(int n)
+    {
+        int [] dp=new int[n+1];
+        Arrays.fill(dp,-1);
+        return help(n,dp );
+    }
+    public static int help(int n,int [] dp)
+    {
+    
+        if( n<0) 
+        {
+            return 0;
+        }
+        if( dp[n]!=-1)
+        {
+            return dp[n];
+        }
+        if( n==0)
+        {
+            return 1;
+        }
+        return dp[n] =help( n-1,dp)+help(n-2,dp);
+    }
+}
+
+
+| Approach              | Time Complexity | Space Complexity |
+| --------------------- | --------------- | ---------------- |
+| Brute Force Recursion | O(2ⁿ)           | O(n)             |
+| Memoization           | O(n)            | O(n)             |
