@@ -1,0 +1,68 @@
+class Solution {
+///Optimized
+    public int minDistance(String word1, String word2)
+    {
+        int idx=word1.length();
+        int id=word2.length();
+        int [][] dp=new int[idx+1][id+1];
+        for(int[] ar:dp) Arrays.fill( ar,-1);
+    
+        return help( idx-1,word1,id-1,word2,dp );
+    }
+    public static int help( int idx,String word1,int id,String word2,int[][] dp )
+    {
+        if( idx<0 )
+        {
+            return id+1;
+        }
+        if( id<0 )//<= does not check value present at index  0
+        {
+            return idx+1;
+        }
+        if( dp[idx][id]!=-1)
+        {
+            return dp[idx][id];
+        }
+        if( word1.charAt(idx)==word2.charAt(id) )
+        {
+            return dp[idx][id]=help( idx-1,word1,id-1,word2,dp);
+        }
+        else
+        {
+            return dp[idx][id]= 1+Math.min(  help(idx-1,word1,id,word2,dp),Math.min( help(idx-1,word1,id-1,word2,dp),(help(idx,word1,id-1,word2,dp) )  )) ;
+        }
+    }
+//Brute Force   
+    public int minDistance(String word1, String word2)
+    {
+        int idx=word1.length();
+        int id=word2.length();
+    
+        return help( idx-1,word1,id-1,word2 );
+    }
+    public static int help( int idx,String word1,int id,String word2 )
+    {
+        if( idx<0 )
+        {
+            return id+1;
+        }
+        if( id<0 )//<= does not check value present at index  0
+        {
+            return idx+1;
+        }
+        if( word1.charAt(idx)==word2.charAt(id) )
+        {
+            return help( idx-1,word1,id-1,word2 );
+        }
+        else
+        {
+            return 1+Math.min(  help(idx-1,word1,id,word2),Math.min( help(idx-1,word1,id-1,word2),(help(idx,word1,id-1,word2) )  )) ;
+        }
+    }
+}
+
+
+| Approach    | Time Complexity | Space Complexity              |
+| ----------- | --------------- | ----------------------------- |
+| Brute Force | **O(3^(m+n))**  | **O(m+n)**                    |
+| Memoization | **O(m×n)**      | **O(m×n + m+n)** ≈ **O(m×n)** |
