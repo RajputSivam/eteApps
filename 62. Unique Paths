@@ -1,0 +1,63 @@
+class Solution {
+// brute force
+    public int uniquePaths(int m, int n)
+    {
+        int rows=m;
+        int col=n;
+        int cr=0;
+        int cc=0;
+        return help(cr,cc,rows,col);
+    }
+    public static int help(int cr,int cc,int rows,int col)
+    {
+        if( cr>=rows || cc>=col )
+        {
+            return 0;
+        }
+        if( cr==rows-1 && cc==col-1 )
+        {
+            return 1;
+        }
+        int l=help(cr+1,cc,rows,col);
+        int r=help(cr,cc+1,rows,col);
+
+        return l+r;
+    }
+    ///OPtimized Code
+    public int uniquePaths(int m, int n)
+    {
+        int rows=m;
+        int col=n;
+        int cr=0;
+        int cc=0;
+        int [][] dp=new int[rows+1][col+1];
+        for(int [] ar:dp) Arrays.fill(ar,-1 );
+        return help(cr,cc,rows,col,dp);
+    }
+    public static int help(int cr,int cc,int rows,int col,int [][] dp)
+    {
+        if( cr>=rows || cc>=col )
+        {
+            return 0;
+        }
+        if( dp[cr][cc]!=-1)
+        {
+            return dp[cr][cc];
+        }
+
+        if( cr==rows-1 && cc==col-1 )
+        {
+            return 1;
+        }
+        int l=help(cr+1,cc,rows,col,dp);
+        int r=help(cr,cc+1,rows,col,dp);
+
+        return dp[cr][cc]=l+r;
+    }
+}
+
+
+| Approach                  | Time Complexity | Space Complexity                          |
+| ------------------------- | --------------- | ----------------------------------------- |
+| Brute Force (Recursion)   | **O(2^(m+n))**  | **O(m+n)**                                |
+| Memoization (Top-Down DP) | **O(m × n)**    | **O(m × n)** *(+ recursion stack O(m+n))* |
