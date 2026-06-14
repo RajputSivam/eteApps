@@ -1,0 +1,63 @@
+/Brute Force
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        StringBuilder sb=new  StringBuilder(s);
+        sb.reverse();
+        String s2=sb.toString();
+        int idx=s.length();
+        int id=s2.length();
+        return help( idx-1,s,id-1,s2);
+    }
+    public int help( int idx,String s,int id,String s2)
+    {
+        if( idx<0 || id<0 )
+        {
+            return 0;
+        }
+        if( s.charAt(idx)==s2.charAt(id) )
+        {
+            return 1+help( idx-1,s,id-1,s2);
+        }
+        else
+        {
+            return Math.max( help(idx-1,s,id,s2),help( idx,s,id-1,s2 ));
+        }
+    }
+}
+//Optimized
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        StringBuilder sb=new  StringBuilder(s);
+        sb.reverse();
+        String s2=sb.toString();
+        int idx=s.length();
+        int id=s2.length();
+        int[][] dp=new int[idx+1][id+1];
+        for(int [] ar:dp) Arrays.fill( ar,-1);
+        return help( idx-1,s,id-1,s2,dp);
+    }
+    public int help( int idx,String s,int id,String s2,int [][] dp)
+    {
+        if( idx<0 || id<0 )
+        {
+            return 0;
+        }
+        if( dp[idx][id]!=-1)
+        {
+            return dp[idx][id];
+        }
+        if( s.charAt(idx)==s2.charAt(id) )
+        {
+            return dp[idx][id]=1+help( idx-1,s,id-1,s2,dp);
+        }
+        else
+        {
+            return  dp[idx][id]=Math.max( help(idx-1,s,id,s2,dp),help( idx,s,id-1,s2,dp ));
+        }
+    }
+}
+
+| Approach                  | Time Complexity | Space Complexity |
+| ------------------------- | --------------- | ---------------- |
+| Brute Force (Recursion)   | O(4ⁿ)           | O(n)             |
+| Memoization (Top-Down DP) | O(n²)           | O(n²)            |
