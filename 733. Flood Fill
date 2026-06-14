@@ -1,0 +1,63 @@
+class Solution {
+    // Brute force appraoch
+    static int [] dr={-1,1,0,0};
+    static int [] dc={0,0,-1,1};
+    static int rowL;
+    static int colL;
+    public int[][] floodFill(int[][] image, int sr, int sc, int color)
+    {
+        rowL=image.length;
+        colL=image[0].length;
+        int col=image[sr][sc];
+        boolean [][] vis=new boolean[rowL+1][colL+1];
+        dfs( sr,sc,image,color,vis,col);
+        return image;
+    }
+    public static void dfs(int  sr,int sc,int [][]image,int color,boolean [][] vis,int col)
+    {
+        if( sr<0 || sc<0 || sr>=rowL || sc>=colL || image[sr][sc]!=col || vis[sr][sc]==true )
+        {
+            return;
+        }
+        vis[sr][sc]=true;
+        image[sr][sc]=color;
+        for(int i=0;i<4;i++)
+        {
+            dfs( sr+dr[i],sc+dc[i], image,color,vis,col );
+        }
+    }
+
+/// Optimized code
+static int [] dr={-1,1,0,0};
+    static int [] dc={0,0,-1,1};
+    static int rowL;
+    static int colL;
+    public int[][] floodFill(int[][] image, int sr, int sc, int color)
+    {
+        rowL=image.length;
+        colL=image[0].length;
+        int col=image[sr][sc];
+        if( col==color) return image;
+        boolean [][] vis=new boolean[rowL+1][colL+1];
+        dfs( sr,sc,image,color,vis,col);
+        return image;
+    }
+    public static void dfs(int  sr,int sc,int [][]image,int color,boolean [][] vis,int col)
+    {
+        if( sr<0 || sc<0 || sr>=rowL || sc>=colL || image[sr][sc]!=col || vis[sr][sc]==true )
+        {
+            return;
+        }
+        vis[sr][sc]=true;
+        image[sr][sc]=color;
+        for(int i=0;i<4;i++)
+        {
+            dfs( sr+dr[i],sc+dc[i], image,color,vis,col );
+        }
+    }
+}
+
+| Approach        | Time Complexity                             | Space Complexity                            |
+| --------------- | ------------------------------------------- | ------------------------------------------- |
+| Brute Force DFS | **O(m × n)**                                | **O(m × n)**                                |
+| Optimized DFS   | **O(1)** best case, **O(m × n)** worst case | **O(1)** best case, **O(m × n)** worst case |
