@@ -1,0 +1,61 @@
+//Brute force
+// class Solution
+{
+    public int lengthOfLIS(int[] nums)
+    {
+        return solve(0,-1,nums);
+    }
+    public static int solve(int cur,int prev,int []nums)
+    {
+        if( cur==nums.length)
+        {
+            return 0;
+        }
+        int nt=solve(cur+1,prev,nums);
+        int t=0;
+        if( prev==-1 || nums[cur]>nums[prev])
+        {
+            t=1+solve(cur+1,cur,nums);//we want to find lenght
+        }
+        return Math.max(t,nt);
+    }
+}
+//Memoisation
+class Solution
+{
+    public int lengthOfLIS(int[] nums)
+    {
+        int n=nums.length;
+        int [][] dp=new int[n+1][n+2];
+        for( int[] ar:dp)
+        {
+            Arrays.fill(ar,-1);
+        }
+
+        return help(0,-1,nums,dp);
+    }
+    public static int help(int cur,int prev,int[] nums,int[][] dp)
+    {
+        if( cur==nums.length)
+        {
+            return 0;
+        }
+        if( dp[cur][prev+1]!=-1)
+        {
+            return dp[cur][prev+1];
+        }
+        int t=0;
+        int nt=help(cur+1,prev,nums,dp);
+        if( prev==-1 || nums[cur]>nums[prev] )
+        {
+            t=1+help(cur+1,cur,nums,dp);
+        }
+        dp[cur][prev+1]=Math.max(t,nt);
+        return dp[cur][prev+1];
+    }
+}
+
+| Approach                  | Time Complexity | Space Complexity |
+| ------------------------- | --------------- | ---------------- |
+| Brute Force Recursion     | (O(2^n))        | (O(n))           |
+| Memoization (Top-Down DP) | (O(n^2))        | (O(n^2))         |
