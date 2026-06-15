@@ -1,0 +1,37 @@
+class Solution {
+    ///OPtimized Approach
+    public int[] twoSum(int[] nums, int target)
+    {
+        HashMap<Integer,Integer>hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            if(  hm.containsKey(nums[i]) )
+            {
+                return new int[]{hm.get(nums[i]),i };
+            }
+            hm.put(target-nums[i],i);
+        }
+        return new int[]{-1,-1};
+    }
+    ///Brute Force Approach
+    public int[] twoSum(int[] nums, int target)
+    {
+        int sm=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            for(int j=i+1;j<nums.length;j++)
+            {
+                if( nums[i]+nums[j]==target )
+                {
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return new int[]{-1,-1};
+    }
+} 
+
+| Approach            | Time Complexity | Space Complexity |
+| ------------------- | --------------- | ---------------- |
+| Brute Force         | **O(n²)**       | **O(1)**         |
+| HashMap (Optimized) | **O(n)**        | **O(n)**         |
