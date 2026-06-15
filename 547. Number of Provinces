@@ -1,0 +1,106 @@
+// class Solution {
+    // ///brute force Approach
+    int [] rank;
+    int [] parent;
+    public int findCircleNum(int[][] isConnected) 
+    {
+        
+        int n=isConnected.length;
+        rank=new int[n];
+        parent=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            parent[i]=i;
+            rank[i]=0;
+        }
+        for(int i=0;i<isConnected.length;i++)
+        {
+            for(int j=0;j<isConnected[0].length;j++ )//union to check relationship
+            {
+                if( isConnected[i][j]==1)
+                {
+                    union(i,j);
+                }
+            }
+        }
+        int c=0;
+        for(int i=0;i<n;i++)
+        {
+            if( parent[i]==i)
+            {
+                c++;
+            }
+        }
+        return c;
+    }
+    public  void union( int x,int y)
+    {
+        int px=parent(x);
+        int py=parent(y);
+        if( px==py) return;
+        if( rank[px]<rank[py] )
+        {
+            parent[px]=py;
+        }
+        else if( rank[px]>rank[py] )
+        {
+            parent[py]=px;
+        }
+        else//both have same rank equal heights
+        {
+            parent[px]=py;
+            rank[px]++;
+        }
+        return ;
+    }
+    public  int parent(int x)
+    {
+        if( parent[x]!=x)
+        {
+            return parent[x]= parent( parent[x]);
+        }
+        return parent[x];
+    }
+    //count no of boosed=prviences
+}
+ ///Optimized Code
+class Solution {
+    static int rowL;
+    
+    public int findCircleNum(int[][] isConnected)
+    {
+        
+        int c=0;
+        rowL=isConnected.length;
+     
+        boolean[]vis=new boolean [rowL+1];
+        for(int i=0;i<rowL;i++)
+        {
+          
+                if( vis[i]==false  )
+                {
+                    c++;
+                    dfs( i,vis,isConnected);
+                }
+        }
+        return c;
+    }
+    public static void dfs( int sr,boolean [] vis,int[][] isConnected)
+    {
+      
+        vis[sr]=true;
+        for( int i=0;i<rowL;i++)
+        {
+            if( vis[i]==false && isConnected[sr][i]==1 )
+            {
+                dfs( i,vis,isConnected );
+            }
+        }
+    }
+}
+
+
+| Approach          | Time               | Space |
+| ----------------- | ------------------ | ----- |
+| DFS/BFS Traversal | O(n²)              | O(n)  |
+| DSU (Union Find)  | O(n²·α(n)) ≈ O(n²) | O(n)  |
