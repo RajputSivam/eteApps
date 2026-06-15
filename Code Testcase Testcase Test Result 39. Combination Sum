@@ -1,0 +1,63 @@
+class Solution
+{
+    ///Brute Force
+    public List<List<Integer>> combinationSum(int[] candidates, int target)
+    {
+        List<List<Integer>> res=new ArrayList<>();
+        help( res,0,target,new ArrayList<>() ,candidates);
+        return res;   
+    }
+    public static void help( List<List<Integer>> res,int idx,int target, ArrayList<Integer> ar,int [] candidates)
+    {
+        if( target==0 )
+        {
+            res.add( new ArrayList<>(ar) );
+            return;
+        }
+        if( idx<0 || idx==candidates.length || target<0)
+        {
+            return;
+        }
+        ///pick
+      
+        ar.add( candidates[idx] );
+        help( res,idx,target-candidates[idx],ar,candidates);
+        ar.remove( ar.size()-1 );
+        
+        help( res,idx+1,target, ar,candidates);//.pick
+    }
+
+    ///OPtimized Appraoch
+    public List<List<Integer>> combinationSum(int[] candidates, int target) 
+    {
+        List<List<Integer>> res= new ArrayList<>();
+        help( res,0,target,candidates,new ArrayList<>() );
+        return res;
+    }
+    public static void help( List<List<Integer>> res,int idx,int target,int [] candidates,List<Integer> ar)
+    {
+        
+        if(target==0)
+        {
+            res.add( new ArrayList<>(ar) );
+            return;
+        }
+        if( idx<0 || idx==candidates.length || target<0 ) return;
+        if( idx<candidates.length && candidates[idx]<=target )
+        {
+            ar.add(candidates[idx]);
+            help( res,idx,target-candidates[idx],candidates,ar );
+
+           
+           ar.remove( ar.size()-1 );//backtarckt
+        }
+        help( res,idx+1,target,candidates,ar);   
+    }
+}
+///backtrack so that more possible option can explore
+
+
+| Approach            | Time Complexity           | Auxiliary Space |
+| ------------------- | ------------------------- | --------------- |
+| Brute Force         | (O(2^{T/M} \times (T/M))) | (O(T/M))        |
+| Optimized (Pruning) | (O(2^{T/M} \times (T/M))) | (O(T/M))        |
