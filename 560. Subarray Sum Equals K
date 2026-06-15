@@ -1,0 +1,43 @@
+class Solution {
+    public int subarraySum(int[] nums, int k)
+    {
+        int c=0;
+        int sm=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            sm=0;
+            for(int j=i;j<nums.length;j++)
+            {
+                sm+=nums[j];
+                if( sm==k)
+                {
+                    c++;
+                }
+            }
+        }
+        return c; 
+    }
+    ///Optmized Appraoch
+    public int subarraySum(int[] nums, int k)
+    {
+        int n=nums.length;
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        hm.put(0,1);
+        int cursum=0;
+        int count=0;
+        hm.put(0,1);
+        for(int num:nums)
+        {
+            cursum+=num;
+            count+=hm.getOrDefault(cursum-k,0);//count freq of cursum
+            hm.put(cursum,hm.getOrDefault(cursum,0)+1 );
+        }
+        return count;
+    }
+    
+}
+
+| Approach             | Time Complexity | Space Complexity |
+| -------------------- | --------------- | ---------------- |
+| Brute Force          | **O(n²)**       | **O(1)**         |
+| Prefix Sum + HashMap | **O(n)**        | **O(n)**         |
