@@ -1,0 +1,77 @@
+class Solution {
+    /// Brute force Approach MAX HEAP
+    class Pair
+    {
+            int key;
+            int val;
+            Pair(int key,int val)
+            {
+                this.key=key;
+                this.val=val;
+            }
+    }
+    public int[] topKFrequent(int[] nums, int k) 
+    {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1 );
+        }
+        PriorityQueue<Pair> pq=new PriorityQueue<>( (a,b)->Integer.compare(b.val,a.val ) );//max heap
+        for(int i:hm.keySet() )
+        {
+            pq.offer(new Pair(i,hm.get(i) ));
+        }
+        int [] ar=new int[k];
+        int id=0;
+        while(k-->0)
+        {
+            Pair cur=pq.poll();
+            ar[id++]=cur.key;
+        }
+        return ar;
+        
+    }
+    /// Optmized code MIN HEAP
+    class Pair
+    {
+            int key;
+            int val;
+            Pair(int key,int val)
+            {
+                this.key=key;
+                this.val=val;
+            }
+    }
+    public int[] topKFrequent(int[] nums, int k) 
+    {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1 );
+        }
+        PriorityQueue<Pair> pq=new PriorityQueue<>( (a,b)->Integer.compare(a.val,b.val ) );//min heap
+        for(int i:hm.keySet() )
+        {
+            pq.offer(new Pair(i,hm.get(i) ));
+            if(pq.size()>k)
+            {
+                pq.poll();
+            } 
+        }
+        int [] ar=new int[k];
+        int id=0;
+        while(k-->0)
+        {
+            Pair cur=pq.poll();
+            ar[id++]=cur.key;
+        }
+        return ar;
+    }
+}
+
+| Approach                        | Time Complexity                            | Space Complexity                   |
+| ------------------------------- | ------------------------------------------ | ---------------------------------- |
+| **Max Heap (Brute Force)**      | **O(n + u log u)** → Worst: **O(n log n)** | **O(u)** → Worst: **O(n)**         |
+| **Min Heap Size K (Optimized)** | **O(n + u log k)** → Worst: **O(n log k)** | **O(u + k)** → Worst: **O(n + k)** |
+
