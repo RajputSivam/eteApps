@@ -1,0 +1,73 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    //Brute force
+    public List<List<Integer>> levelOrder(TreeNode root)
+    {
+        List<List<Integer>> res=new ArrayList<>();
+        if( root==null ) return res;
+        help( res,root,0);
+        return res;
+    }
+    public void help( List<List<Integer>> res,TreeNode root,int depth)
+    {
+        if( root==null) return ;
+        if( depth==res.size() )
+        {
+            res.add(new ArrayList<>( ) );
+        }
+        res.get(depth).add( root.val );
+
+        help( res,root.left,depth+1 );
+        help( res,root.right,depth+1  );
+
+    }
+
+    /Optimzed Approach
+    public List<List<Integer>> levelOrder(TreeNode root)
+    {
+        List<List<Integer>>  res=new ArrayList<>();
+        if( root==null) return res;
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty() )
+        {
+            int sx=q.size();
+            List<Integer> ar=new ArrayList<>();
+            for(int i=0;i<sx;i++)
+            {
+                TreeNode ap=q.poll();
+                ar.add(ap.val);
+                if( ap.left!=null )
+                {
+                    q.add( ap.left );
+                }
+                if( ap.right!=null )
+                {
+                    q.add( ap.right);
+                }
+            }
+            res.add( ar );
+        }
+        return res;
+    }
+}
+
+
+| Approach        | Time Complexity | Auxiliary Space | Total Space (including result) |
+| --------------- | --------------- | --------------- | ------------------------------ |
+| DFS (Recursive) | **O(n)**        | **O(h)**        | **O(n)**                       |
+| BFS (Queue)     | **O(n)**        | **O(n)**        | **O(n)**                       |
