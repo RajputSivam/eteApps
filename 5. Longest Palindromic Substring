@@ -1,0 +1,86 @@
+class Solution
+{
+    //Optimized Code
+    public String longestPalindrome(String s)
+    {
+        int rl=0;
+        String rs="";
+        
+        for(int i=0;i<s.length();i++ )
+        {
+            //odd len
+            int l=i;
+            int r=i;
+            while( l>=0 && r<s.length()&& s.charAt(l)==s.charAt(r) )
+            {
+                if( rl<(r-l+1) ) 
+                {
+                    rl=r-l+1; 
+                    rs=s.substring(l,r+1);
+                }
+                l--;
+                r++;
+            }
+            //even len
+            l=i;
+            r=i+1;
+            while( l>=0 && r<s.length()&& s.charAt(l)==s.charAt(r) )
+            {
+                if( rl<(r-l+1) ) 
+                {
+                    rl=r-l+1; 
+                    rs=s.substring(l,r+1);
+                }
+                l--;
+                r++;
+            }
+        }
+        return rs;
+    }
+}
+//Brute Force Appraoch
+class Solution
+{
+    public String longestPalindrome(String s)
+    {
+        int mx=Integer.MIN_VALUE;
+        int start=0;
+        int end=0;
+        for(int i=0;i<s.length();i++)
+        {
+            for(int j=i;j<s.length();j++)
+            {
+                if( pal(s, i,j)==true)
+                {
+                    if( mx<(j-i+1) )
+                    {
+                        mx=(j-i+1);
+                        start=i;
+                        end=j;
+                    }
+                }
+            }
+        }
+        return s.substring(start,end+1);
+    }
+    public static boolean pal(String s,int i,int j)
+    {
+        while(i<j)
+        {
+            if( s.charAt(i)!=s.charAt(j) )
+            {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
+
+
+
+| Approach                         | Time Complexity | Auxiliary Space Complexity |
+| -------------------------------- | --------------- | -------------------------- |
+| Optimized (Expand Around Center) | **O(n²)**       | **O(1)**                   |
+| Brute Force                      | **O(n³)**       | **O(1)**                   |
