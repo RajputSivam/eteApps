@@ -1,0 +1,47 @@
+class Solution {
+    //Optmized Appraoch
+    public int majorityElement(int[] nums)
+    {
+        HashMap<Integer,Integer> hm=new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            hm.put(nums[i],hm.getOrDefault(nums[i],0)+1 );
+        }
+        int n=nums.length;
+        for(int i:hm.keySet())
+        {
+            if( hm.get(i)>( n/2) )
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    ///Brute Force
+    public int majorityElement(int[] nums)
+    {
+        int c=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            c=0;
+            for(int j=0;j<nums.length;j++)
+            {
+                if( nums[i]==nums[j] )
+                {
+                H    c++;
+                }
+            }
+            if(  c>(nums.length/2) )
+            {
+                return nums[i];
+            } 
+        }
+        return -1;
+    }
+}
+
+
+| Approach    | Time Complexity | Auxiliary Space Complexity |
+| ----------- | --------------- | -------------------------- |
+| HashMap     | **O(n)**        | **O(n)**                   |
+| Brute Force | **O(n²)**       | **O(1)**                   |
