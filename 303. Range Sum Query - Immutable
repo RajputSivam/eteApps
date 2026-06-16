@@ -1,0 +1,48 @@
+class NumArray
+{
+    ///Optimal Appraoch
+    int[] pr;
+    public NumArray(int[] nums)
+    {
+        pr=new int[nums.length];
+        pr[0]=nums[0];
+        for(int i=1;i<nums.length;i++)
+        {
+            pr[i]=pr[i-1]+nums[i];
+        }
+    }
+    public int sumRange(int left, int right)
+    {
+        return (left==0)?pr[right]:pr[right]-pr[left-1];
+    }
+}
+///Brute Force Appraoch
+class NumArray
+{
+    int []ar;
+    public NumArray(int[] nums)
+    {
+        ar=nums;
+    }
+    public int sumRange(int left, int right)
+    {
+        int sm=0;
+        for(int i=left;i<=right;i++)
+        {
+            sm+=ar[i];
+        }
+        return sm;
+    }
+}
+
+| Approach             | Constructor TC | Constructor SC | sumRange TC                       | sumRange SC |
+| -------------------- | -------------- | -------------- | --------------------------------- | ----------- |
+| Brute Force          | **O(1)**       | **O(1)**       | **O(right-left+1)** (Worst: O(n)) | **O(1)**    |
+| Prefix Sum (Optimal) | **O(n)**       | **O(n)**       | **O(1)**                          | **O(1)**    |
+
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * int param_1 = obj.sumRange(left,right);
+ */
