@@ -1,0 +1,76 @@
+class Solution
+{
+    ///Optmal Appraoch
+    public int pivotIndex(int[] nums)
+    {
+      int n=nums.length;
+      int l=0;
+      int r=0;
+      int sm=0;
+      for(int i=0;i<n;i++) sm+=nums[i];
+
+      for(int i=0;i<nums.length;i++)
+      {
+        sm-=nums[i];
+        if( sm==l) return i;
+        l+=nums[i];
+      }
+      return -1;
+        
+    }
+
+    ///Brute Force
+    public int pivotIndex(int[] nums)
+    {
+        int ls=0;
+        int rs=0;
+        int n=nums.length;
+
+        for(int i=0;i<nums.length;i++)
+        {
+            ls=0;
+            rs=0;
+
+            for(int j=0;j<i;j++)
+            {
+                ls+=nums[j];
+            }
+            for(int j=i+1;j<n;j++)
+            {
+                rs+=nums[j];
+            }
+            if( rs==ls)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+
+
+
+
+| Approach                               | Time Complexity | Space Complexity |
+| -------------------------------------- | --------------- | ---------------- |
+| Brute Force                            | **O(n²)**       | **O(1)**         |
+| Optimal (Running Left Sum + Total Sum) | **O(n)**        | **O(1)**         |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
