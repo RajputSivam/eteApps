@@ -1,0 +1,145 @@
+///Brute Force Approach  
+class Solution
+{
+    public int largestRectangleArea(int[] heights)
+    {
+        int n=heights.length;
+        int ma=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++)
+        {
+            int l=i-1;
+            while( l>=0)
+            {
+                if( heights[l]>heights[i] ){
+                    l--;
+                }
+                else
+                {
+                    break;
+                }
+            }
+             int r=i+1;
+            while( r<=n-1)
+            {
+                if( heights[r]>=heights[i]){
+                    r++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            ma=Math.max(ma,(r-l-1)*heights[i] );
+        }
+        return ma;
+    }
+}
+
+class Solution
+{    
+    private int[] previousSmaller(int[] heights)
+    {
+        int n = heights.length;
+        int[] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+        for(int i = 0; i < n; i++)
+        {
+            while(!st.isEmpty() && heights[st.peek()] >= heights[i])
+            {
+                st.pop();
+            }
+            ans[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
+        }
+        return ans;
+    }
+    private int[] nextSmaller(int[] heights)
+    {
+        int n = heights.length;
+        int[] ans = new int[n];
+        Stack<Integer> st = new Stack<>();
+        for(int i = n - 1; i >= 0; i--)
+        {
+            while(!st.isEmpty() && heights[st.peek()] >= heights[i])
+            {
+                st.pop();
+            }
+            ans[i] = st.isEmpty() ? n : st.peek();
+            st.push(i);
+        }
+        return ans;
+    }
+    public int largestRectangleArea(int[] heights)
+    {
+        int n = heights.length;
+        int res = 0;
+        int[] ps = previousSmaller(heights);
+        int[] ns = nextSmaller(heights);
+        for(int i = 0; i < n; i++)
+        {
+            int width = ns[i] - ps[i] - 1;
+            int curr = width * heights[i];
+            res = Math.max(res, curr);
+        }
+        return res;
+    }
+
+
+///Optimized Appraoch
+class Solution
+{
+    public int[] ps(int [] heights)
+    {
+        Stack<Integer> st=new Stack<>();
+        int[] ans=new int[heights.length];
+        for(int i=0;i<heights.length;i++){
+            while( !st.isEmpty() && heights[st.peek()]>=heights[i] )
+            {
+                st.pop();
+            }
+            ans[i]= st.isEmpty()?-1:st.peek();
+            st.push(i);
+        }
+        return ans;
+    }
+    public int[] ns(int [] heights)
+    {
+        int n=heights.length;
+        Stack<Integer> st=new Stack<>();
+        int[] ans=new int[heights.length];
+        for(int i=n-1;i>=0;i--)
+        {
+            while( !st.isEmpty() && heights[st.peek()]>=heights[i] )
+            {
+                st.pop();
+            }
+            ans[i]= st.isEmpty()?n:st.peek();
+            st.push(i);
+        }
+        return ans;
+    }
+    public int largestRectangleArea(int[] heights)
+    {
+        int n=heights.length;
+        int[] ps=ps(heights);
+        int[] ns=ns(heights);
+        int mx=0;
+        for(int i=0;i<n;i++)
+        {
+            int cur=ns[i]-ps[i]-1;
+            int ar=cur*heights[i];
+            mx=Math.max(mx,ar);
+        }
+        return mx;
+    }
+}
+
+
+
+
+| Approach                        | Time Complexity | Space Complexity |
+| ------------------------------- | --------------- | ---------------- |
+| Brute Force                     | **O(n²)**       | **O(1)**         |
+| Previous Smaller + Next Smaller | **O(n)**        | **O(n)**         |
+| Optimized (same logic)          | **O(n)**        | **O(n)**         |
+
