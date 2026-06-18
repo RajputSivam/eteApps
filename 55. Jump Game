@@ -12,37 +12,35 @@ Output: true
 Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
 Example 2:
 
+
 public boolean canJump(int[] nums)
 {
-    return sol(nums, 0);
+    return solve(nums, 0);
 }
 
-public boolean sol(int[] nums, int idx)
+public boolean solve(int[] nums, int idx)
 {
+    // Base case - reached last index
     if (idx >= nums.length - 1)
     {
         return true;
     }
-    return tryJump(nums, idx, 1); // start from jump = 1
-}
 
-public boolean tryJump(int[] nums, int idx, int jump)
-{
-    // Base case: no valid jump worked
-    if (jump > nums[idx])
+    // Try all possible jumps from current index
+    for (int jump = 1; jump <= nums[idx]; jump++)
     {
-        return false;
+        if (solve(nums, idx + jump))
+        {
+            return true;
+        }
     }
-    // If this jump leads to solution → return true
-    if (sol(nums, idx + jump))
-    {
-        return true;
-    }
-    // Try next jump size
-    return tryJump(nums, idx, jump + 1);
-}
 
-Complexity Reason TimeO(2^n)Overlapping subproblems,
+    return false; // No jump worked
+}
+TCO(2^n)
+SCO(n) stack
+
+
 no memoization SpaceO(n) Recursion stack depth
     Optimized caode
     public boolean canJump(int[] nums)
