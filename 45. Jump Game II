@@ -49,3 +49,8 @@ class Solution {
         return dp[idx]=mn;
     }
 }
+
+| Approach                  | Time Complexity | Space Complexity |
+| ------------------------- | --------------- | ---------------- |
+| Brute Force Recursion     | **O(2^n)**      | **O(n)**         |
+| Memoization (Top-Down DP) | **O(n²)**       | **O(n)**         |
