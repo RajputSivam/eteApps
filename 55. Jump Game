@@ -62,8 +62,10 @@ no memoization SpaceO(n) Recursion stack depth
 }
 
 
-|             | Brute Force         | Greedy    |
-| ----------- | ------------------- | --------- |
-| **Time**    | O(2^n)              | O(n)      |
-| **Space**   | O(n)                | O(1)      |
-| **Verdict** | TLE on large inputs | ✅ Optimal |
+| Complexity       | Value    |
+| ---------------- | -------- |
+| Time Complexity  | **O(n)** |
+| Space Complexity | **O(1)** |
+
+
+
