@@ -39,7 +39,7 @@ class Solution {
         }
 
         // Answer = sum - (min * n)
-        return sum - mn * nums.length;
+        return sum - mn * nums.length;//// Σ(x - min)
     }
 }
 
